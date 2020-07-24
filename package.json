@@ -9,6 +9,8 @@
   "author": "Parvez Dittia",
   "license": "ISC",
   "dependencies": {
+    "firebase-admin": "^9.0.0",
+    "firebase-functions": "^3.8.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
