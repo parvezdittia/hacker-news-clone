@@ -12,5 +12,9 @@
         "function": "helloWorld"
       }
     ]
+  },
+  "functions":{
+    "source": "functions",
+    "runtime": "nodejs8"
   }
 }
