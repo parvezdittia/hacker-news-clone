@@ -2,11 +2,18 @@ import * as functions from "firebase-functions";
 import fs from "fs";
 import React from "react";
 import { renderToString } from "react-dom/server";
+import express from "express";
 import App from "./src/App";
 
 const INDEX = fs.readFileSync(__dirname + "/src/index.html", "utf-8");
 
-exports.app = functions.https.onRequest((request, response) => {
+const app = express();
+
+app.use("/static", express.static("static"));
+
+app.get("/", (req, res) => {
   const HTML = INDEX.replace("<!--app-->", renderToString(<App />));
-  response.send(HTML);
+  res.send(HTML);
 });
+
+exports.app = functions.https.onRequest(app);
