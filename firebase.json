@@ -1,11 +1,6 @@
 {
   "hosting": {
-    "public": "src",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
@@ -13,7 +8,7 @@
       }
     ]
   },
-  "functions":{
+  "functions": {
     "source": "functions",
     "runtime": "nodejs8"
   }
