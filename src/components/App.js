@@ -8,15 +8,11 @@ class App extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    console.log(this.props);
-  }
-
   render() {
     return (
       <>
         <Header></Header>
-        <Content></Content>
+        <Content news={this.props.news}></Content>
         <Chart></Chart>
       </>
     );
