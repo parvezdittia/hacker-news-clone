@@ -12,7 +12,6 @@ const appString = renderToString(<App />);
 app.use("/static", express.static("static"));
 
 app.get("**", (req, res) => {
-  console.log("here", appString);
   const HTML = INDEX.replace("<!--app-->", appString);
   res.send(HTML);
 });
