@@ -7,7 +7,7 @@
     "webpack-start": "webpack --mode=development --watch",
     "webpack-build": "webpack --mode=production",
     "babel-server": "babel -w src/index.js -d functions",
-    "babel-components": "babel -w src/components/App.js -d functions/components"
+    "babel-components": "babel -w src/components -d functions/components"
   },
   "author": "Parvez Dittia",
   "license": "ISC",
