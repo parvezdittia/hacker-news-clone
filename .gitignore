@@ -2,4 +2,6 @@ node_modules
 ui-debug.log
 firebase-debug.log
 .firebase/**
-functions
+functions/components
+functions/static
+functions/index.js

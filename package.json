@@ -4,9 +4,10 @@
   "description": "Hacker news clone",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --mode=development --watch",
-    "build": "webpack --mode=production",
-    "ready": "babel index.js -d functions && babel src/App.js -d functions/src"
+    "webpack-start": "webpack --mode=development --watch",
+    "webpack-build": "webpack --mode=production",
+    "babel-server": "babel -w src/index.js -d functions",
+    "babel-components": "babel -w src/components/App.js -d functions/components"
   },
   "author": "Parvez Dittia",
   "license": "ISC",
