@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import NewsCard from "./NewsCard/NewsCard";
 
 class Content extends Component {
   constructor(props) {
@@ -6,7 +7,9 @@ class Content extends Component {
   }
 
   render() {
-    return <>New Feed</>;
+    return this.props.news.map((item) => (
+      <NewsCard newsItem={item} key={item.id} />
+    ));
   }
 }
 
