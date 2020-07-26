@@ -61,7 +61,6 @@ class App extends Component {
         });
       });
     }
-    console.log(newPage);
     if (!isNativeNavigation) history.pushState(newPage, "", `/page/${newPage}`);
   }
 
