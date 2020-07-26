@@ -15,14 +15,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("popstate", this.handleBackbutton);
-  }
+    const page = this.getCurrentPage(window.location.pathname);
+    console.log(page);
+    window.STORE[page] = [...window.SSR_DUMP];
+    window.SSR_DUMP = null;
 
-  handleBackbutton(event) {
-    console.log("here");
-    // this.setState({
-    //   new: event.state,
-    // });
+    window.addEventListener("popstate", this.handleBackbutton);
   }
 
   getCurrentPage(pathname) {
@@ -42,13 +40,20 @@ class App extends Component {
     } else if (direction === "next") {
       newPage = page + 1;
     }
-    this.fetchNews(newPage).then((response) => {
-      const news = this.filter(response.data);
-      history.pushState(news, "", `/page/${newPage}`);
+    if (STORE[newPage]) {
       this.setState({
-        news: news,
+        news: STORE[newPage],
       });
-    });
+    } else {
+      this.fetchNews(newPage).then((response) => {
+        const news = this.filter(response.data);
+        window.STORE[newPage] = [...news];
+        this.setState({
+          news: news,
+        });
+      });
+    }
+    history.pushState(null, "", `/page/${newPage}`);
   }
 
   filter(data) {
