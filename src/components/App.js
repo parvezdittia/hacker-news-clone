@@ -8,19 +8,23 @@ import axios from "axios";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.navigate = this.navigate.bind(this);
     this.state = {
       news: this.props.news,
     };
+    this.navigate = this.navigate.bind(this);
+    this.handleNativeNavigation = this.handleNativeNavigation.bind(this);
   }
 
   componentDidMount() {
     const page = this.getCurrentPage(window.location.pathname);
-    console.log(page);
     window.STORE[page] = [...window.SSR_DUMP];
     window.SSR_DUMP = null;
 
-    window.addEventListener("popstate", this.handleBackbutton);
+    window.addEventListener("popstate", this.handleNativeNavigation);
+  }
+
+  handleNativeNavigation(event) {
+    this.updatePage(this.getCurrentPage(location.pathname), true);
   }
 
   getCurrentPage(pathname) {
@@ -40,6 +44,10 @@ class App extends Component {
     } else if (direction === "next") {
       newPage = page + 1;
     }
+    this.updatePage(newPage, false);
+  }
+
+  updatePage(newPage, isNativeNavigation) {
     if (STORE[newPage]) {
       this.setState({
         news: STORE[newPage],
@@ -53,7 +61,8 @@ class App extends Component {
         });
       });
     }
-    history.pushState(null, "", `/page/${newPage}`);
+    console.log(newPage);
+    if (!isNativeNavigation) history.pushState(newPage, "", `/page/${newPage}`);
   }
 
   filter(data) {
@@ -89,8 +98,8 @@ class App extends Component {
     return (
       <>
         <Header />
-        <Content news={this.state.news} />
         <Navigation navigate={this.navigate} />
+        <Content news={this.state.news} />
         <Chart />
       </>
     );
