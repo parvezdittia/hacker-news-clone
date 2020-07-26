@@ -7,9 +7,13 @@ class Content extends Component {
   }
 
   render() {
-    return this.props.news.map((item) => (
-      <NewsCard newsItem={item} key={item.id} />
-    ));
+    return (
+      <section>
+        {this.props.news.map((item) => (
+          <NewsCard newsItem={item} key={item.id} />
+        ))}
+      </section>
+    );
   }
 }
 

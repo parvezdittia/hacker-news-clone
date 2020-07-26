@@ -21,6 +21,16 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/page/:page", (req, res) => {
+  fetchNews(req.params.page).then((response) => {
+    const newsFeed = filter(response.data);
+    const appString = renderToString(<App news={newsFeed} />);
+    index = index.replace("<!--app-->", appString);
+    index = index.replace('"SSR_DATA"', JSON.stringify(newsFeed));
+    res.send(index);
+  });
+});
+
 function fetchNews(page = 0) {
   const URL = "https://hn.algolia.com/api/v1/search_by_date";
   return axios.get(URL, {
