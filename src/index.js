@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
   });
 });
 
-function fetchNews(page = 1) {
+function fetchNews(page = 0) {
   const URL = "https://hn.algolia.com/api/v1/search_by_date";
   return axios.get(URL, {
     params: {

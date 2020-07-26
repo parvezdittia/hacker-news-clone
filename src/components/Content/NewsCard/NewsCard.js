@@ -2,11 +2,11 @@ import React from "react";
 import { render } from "react-dom";
 
 function NewsCard(props) {
-  console.log(props.newsItem);
   return (
-    <div>
+    <div className="newsCard">
+      <h4 className="newsCardTitle">{props.newsItem.details}</h4>
       {props.newsItem.id} {props.newsItem.comments}
-      {props.newsItem.votes} {props.newsItem.details}
+      {props.newsItem.votes}
       {props.newsItem.url} {props.newsItem.author} {props.newsItem.timeStamp}
     </div>
   );
