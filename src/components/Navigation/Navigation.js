@@ -1,15 +1,18 @@
 import React from "react";
 
-function Navigation(props) {
+function Navigation({ navigate, page }) {
   return (
     <section className="navButtonsContainer">
-      <button
-        className="navButtons navButtons--border"
-        onClick={() => props.navigate("previous")}
-      >
-        Previous
-      </button>
-      <button className="navButtons" onClick={() => props.navigate("next")}>
+      {page >= 1 ? (
+        <button
+          className="navButtons navButtons--border"
+          onClick={() => navigate("previous")}
+        >
+          Previous
+        </button>
+      ) : null}
+
+      <button className="navButtons" onClick={() => navigate("next")}>
         Next
       </button>
     </section>

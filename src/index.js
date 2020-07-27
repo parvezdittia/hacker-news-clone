@@ -30,13 +30,24 @@ app.get("/setUpVotes", (req, res) => {
 });
 
 app.get("/page/:page", (req, res) => {
-  fetchNews(req.params.page).then((response) => {
+  let page = req.params.page;
+  page = parseInt(page);
+  console.log(page);
+  if (!page || (page && page <= 1)) {
+    page = Math.abs(page);
+    res.redirect(`/`);
+  }
+  fetchNews(page).then((response) => {
     const newsFeed = filter(response.data);
     const appString = renderToString(<App news={newsFeed} />);
     index = index.replace("<!--app-->", appString);
     index = index.replace('"SSR_DATA"', JSON.stringify(newsFeed));
     res.send(index);
   });
+});
+
+app.all("**", (req, res) => {
+  res.redirect("/");
 });
 
 function fetchNews(page = 0) {

@@ -12,6 +12,7 @@ class App extends Component {
       news: this.props.news,
       upVotes: {},
       hiddenNewsItems: {},
+      page: 0,
     };
     this.navigate = this.navigate.bind(this);
     this.handleNativeNavigation = this.handleNativeNavigation.bind(this);
@@ -79,6 +80,10 @@ class App extends Component {
       hiddenNewsItems: hiddenNewsItems ? hiddenNewsItems : {},
     });
 
+    this.setState({
+      page: this.getCurrentPage(location.pathname),
+    });
+
     window.addEventListener("popstate", this.handleNativeNavigation);
   }
 
@@ -110,6 +115,7 @@ class App extends Component {
     if (STORE[newPage]) {
       this.setState({
         news: STORE[newPage],
+        page: this.getCurrentPage(location.pathname),
       });
     } else {
       this.fetchNews(newPage).then((response) => {
@@ -117,10 +123,17 @@ class App extends Component {
         window.STORE[newPage] = [...news];
         this.setState({
           news: news,
+          page: this.getCurrentPage(location.pathname),
         });
       });
     }
-    if (!isNativeNavigation) history.pushState(newPage, "", `/page/${newPage}`);
+    if (!isNativeNavigation) {
+      if (newPage >= 1) {
+        history.pushState(newPage, "", `/page/${newPage}`);
+      } else {
+        history.pushState(newPage, "", "/");
+      }
+    }
   }
 
   filter(data) {
@@ -185,7 +198,7 @@ class App extends Component {
           hiddenNewsItems={this.state.hiddenNewsItems}
           hideNewsItems={this.hideNewsItems}
         />
-        <Navigation navigate={this.navigate} />
+        <Navigation navigate={this.navigate} page={this.state.page} />
         <Chart />
       </>
     );
