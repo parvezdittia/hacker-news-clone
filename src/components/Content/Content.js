@@ -13,17 +13,28 @@ function Content(props) {
         <div className="headingsDetails">News Details</div>
       </div>
       {props.news.map((item) => {
-        return (
-          <NewsCard
-            newsItem={item}
-            key={item.id}
-            voteUp={props.voteUp}
-            id={item.id}
-            userUpVotes={
-              props.userUpVotes[item.id] ? props.userUpVotes[item.id] : 0
-            }
-          />
-        );
+        let isHidden = 0;
+
+        if (props.hiddenNewsItems[item.id]) {
+          isHidden = props.hiddenNewsItems[item.id];
+        }
+
+        if (isHidden === 0) {
+          return (
+            <NewsCard
+              newsItem={item}
+              key={item.id}
+              voteUp={props.voteUp}
+              id={item.id}
+              userUpVotes={
+                props.userUpVotes[item.id] ? props.userUpVotes[item.id] : 0
+              }
+              hideNewsItems={props.hideNewsItems}
+            />
+          );
+        } else {
+          return null;
+        }
       })}
     </section>
   );

@@ -11,11 +11,14 @@ class App extends Component {
     this.state = {
       news: this.props.news,
       upVotes: {},
+      hiddenNewsItems: {},
     };
     this.navigate = this.navigate.bind(this);
     this.handleNativeNavigation = this.handleNativeNavigation.bind(this);
     this.voteUp = this.voteUp.bind(this);
+    this.hideNewsItems = this.hideNewsItems.bind(this);
     this.UPVOTES = "upVotes";
+    this.HIDE = "hiddenNewsItems";
   }
 
   getUpvotes() {
@@ -30,6 +33,18 @@ class App extends Component {
     localStorage[this.UPVOTES] = JSON.stringify(this.state.upVotes);
   }
 
+  getHiddenNewsItems() {
+    try {
+      return JSON.parse(localStorage[this.HIDE]);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  setHiddenNewsItems() {
+    localStorage[this.HIDE] = JSON.stringify(this.state.hiddenNewsItems);
+  }
+
   componentDidMount() {
     const page = this.getCurrentPage(window.location.pathname);
     window.STORE[page] = [...window.SSR_DUMP];
@@ -41,6 +56,14 @@ class App extends Component {
     }
     this.setState({
       upVotes: upVotes ? upVotes : {},
+    });
+
+    const hiddenNewsItems = this.getHiddenNewsItems();
+    if (!hiddenNewsItems) {
+      localStorage[this.HIDE] = JSON.stringify(null);
+    }
+    this.setState({
+      hiddenNewsItems: hiddenNewsItems ? hiddenNewsItems : {},
     });
 
     window.addEventListener("popstate", this.handleNativeNavigation);
@@ -127,6 +150,17 @@ class App extends Component {
     );
   }
 
+  hideNewsItems(id) {
+    let temp = this.state.hiddenNewsItems;
+    temp[id] = 1;
+    this.setState(
+      {
+        upVotes: { ...temp },
+      },
+      this.setHiddenNewsItems
+    );
+  }
+
   render() {
     return (
       <>
@@ -135,6 +169,8 @@ class App extends Component {
           news={this.state.news}
           voteUp={this.voteUp}
           userUpVotes={this.state.upVotes}
+          hiddenNewsItems={this.state.hiddenNewsItems}
+          hideNewsItems={this.hideNewsItems}
         />
         <Navigation navigate={this.navigate} />
         <Chart />

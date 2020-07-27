@@ -3,7 +3,7 @@ import Details from "./Details/Details";
 import Comments from "./Comments/Comments";
 import Upvotes from "./Upvotes/Upvotes";
 
-function NewsCard({ newsItem, voteUp, id, userUpVotes }) {
+function NewsCard({ newsItem, voteUp, id, userUpVotes, hideNewsItems }) {
   return (
     <div className="newsCard">
       <section className="newsCardMetric">
@@ -21,6 +21,8 @@ function NewsCard({ newsItem, voteUp, id, userUpVotes }) {
           url={newsItem.url}
           author={newsItem.author}
           timeStamp={newsItem.timeStamp}
+          hideNewsItems={hideNewsItems}
+          id={id}
         />
       </section>
     </div>

@@ -1,7 +1,6 @@
 import React from "react";
 
 function Upvotes({ count, voteUp, id, userUpVotes }) {
-  console.log(userUpVotes);
   return (
     <>
       <div className="newsMetric newsMetric--button newMetrix--votes">

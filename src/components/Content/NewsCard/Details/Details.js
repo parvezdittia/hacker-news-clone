@@ -27,7 +27,7 @@ function timeSince(date) {
   return Math.floor(seconds) + " seconds ago";
 }
 
-function Details({ url, author, timeStamp }) {
+function Details({ url, author, timeStamp, hideNewsItems, id }) {
   return (
     <div className="newsCardMeta">
       {url ? (
@@ -40,7 +40,7 @@ function Details({ url, author, timeStamp }) {
           by <b className="newsCardSpecifics--black">{author}</b>
         </span>
         <span className="newsCardSpecifics">{timeSince(timeStamp * 1000)}</span>
-        <button className="newCardHide">
+        <button className="newCardHide" onClick={() => hideNewsItems(id)}>
           [<b>Hide</b>]
         </button>
       </div>
