@@ -5,7 +5,9 @@ module.exports = {
 
   output: {
     filename: "bundle.js",
+    chunkFilename: "[name].bundle.js",
     path: path.resolve(__dirname, "./functions/static/js"),
+    publicPath: "/static/js/",
   },
 
   module: {
@@ -16,5 +18,20 @@ module.exports = {
         use: "babel-loader",
       },
     ],
+  },
+  externals: {
+    moment: "moment",
+  },
+  optimization: {
+    splitChunks: {
+      automaticNameDelimiter: "-",
+      cacheGroups: {
+        commons: {
+          name: "vendor",
+          test: /[\\/]node_modules[\\/]/,
+          minChunks: 2,
+        },
+      },
+    },
   },
 };

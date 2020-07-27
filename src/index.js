@@ -54,7 +54,7 @@ function fetchNews(page = 0) {
   const URL = "https://hn.algolia.com/api/v1/search_by_date";
   return axios.get(URL, {
     params: {
-      query: "javascript",
+      query: "javascript,css,html",
       tags: "story",
       page: page,
     },

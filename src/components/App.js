@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from "./Header/Header";
 import Content from "./Content/Content";
 import Navigation from "./Navigation/Navigation";
-import Chart from "./Chart/Chart";
+//import LineChart from "./Chart/Chart";
 import axios from "axios";
 
 class App extends Component {
@@ -13,6 +13,7 @@ class App extends Component {
       upVotes: {},
       hiddenNewsItems: {},
       page: 0,
+      LineChart: null,
     };
     this.navigate = this.navigate.bind(this);
     this.handleNativeNavigation = this.handleNativeNavigation.bind(this);
@@ -85,6 +86,13 @@ class App extends Component {
     });
 
     window.addEventListener("popstate", this.handleNativeNavigation);
+    import(/* webpackChunkName: "LineChart" */ "./Chart/Chart").then(
+      (module) => {
+        this.setState({
+          LineChart: module.default,
+        });
+      }
+    );
   }
 
   handleNativeNavigation(event) {
@@ -158,7 +166,7 @@ class App extends Component {
     const URL = "https://hn.algolia.com/api/v1/search_by_date";
     return axios.get(URL, {
       params: {
-        query: "javascript",
+        query: "javascript,css,html",
         tags: "story",
         page: page,
       },
@@ -199,7 +207,12 @@ class App extends Component {
           hideNewsItems={this.hideNewsItems}
         />
         <Navigation navigate={this.navigate} page={this.state.page} />
-        <Chart />
+        {this.state.LineChart ? (
+          <this.state.LineChart
+            news={this.state.news}
+            userUpVotes={this.state.upVotes}
+          />
+        ) : null}
       </>
     );
   }
