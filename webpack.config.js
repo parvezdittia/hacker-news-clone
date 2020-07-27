@@ -1,7 +1,5 @@
 const path = require("path");
 
-console.log(path.resolve(__dirname, "./functions/src/static"));
-
 module.exports = {
   entry: "./src/hydrate.js",
 

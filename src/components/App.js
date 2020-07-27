@@ -97,8 +97,8 @@ class App extends Component {
     return (
       <>
         <Header />
-        <Navigation navigate={this.navigate} />
         <Content news={this.state.news} />
+        <Navigation navigate={this.navigate} />
         <Chart />
       </>
     );
