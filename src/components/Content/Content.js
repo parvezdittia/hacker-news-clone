@@ -12,14 +12,19 @@ function Content(props) {
         </div>
         <div className="headingsDetails">News Details</div>
       </div>
-      {props.news.map((item) => (
-        <NewsCard
-          newsItem={item}
-          key={item.id}
-          voteUp={props.voteUp}
-          id={item.id}
-        />
-      ))}
+      {props.news.map((item) => {
+        return (
+          <NewsCard
+            newsItem={item}
+            key={item.id}
+            voteUp={props.voteUp}
+            id={item.id}
+            userUpVotes={
+              props.userUpVotes[item.id] ? props.userUpVotes[item.id] : 0
+            }
+          />
+        );
+      })}
     </section>
   );
 }

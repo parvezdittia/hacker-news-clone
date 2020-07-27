@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       news: this.props.news,
-      upVotes: null,
+      upVotes: {},
     };
     this.navigate = this.navigate.bind(this);
     this.handleNativeNavigation = this.handleNativeNavigation.bind(this);
@@ -131,7 +131,11 @@ class App extends Component {
     return (
       <>
         <Header />
-        <Content news={this.state.news} voteUp={this.voteUp} />
+        <Content
+          news={this.state.news}
+          voteUp={this.voteUp}
+          userUpVotes={this.state.upVotes}
+        />
         <Navigation navigate={this.navigate} />
         <Chart />
       </>
