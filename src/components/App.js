@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from "./Header/Header";
 import Content from "./Content/Content";
 import Navigation from "./Navigation/Navigation";
-//import LineChart from "./Chart/Chart";
+import "./index.css";
 import axios from "axios";
 
 class App extends Component {

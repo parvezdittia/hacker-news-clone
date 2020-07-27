@@ -1,4 +1,6 @@
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
   entry: "./src/hydrate.js",
@@ -6,8 +8,8 @@ module.exports = {
   output: {
     filename: "bundle.js",
     chunkFilename: "[name].bundle.js",
-    path: path.resolve(__dirname, "./functions/static/js"),
-    publicPath: "/static/js/",
+    path: path.resolve(__dirname, "./functions/static"),
+    publicPath: "/static/",
   },
 
   module: {
@@ -16,6 +18,10 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: "babel-loader",
+      },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -34,4 +40,12 @@ module.exports = {
       },
     },
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      path: path.resolve(__dirname, "./functions/static"),
+      filename: "[name].css",
+      chunkFilename: "[id].css",
+    }),
+    new OptimizeCssAssetsPlugin(),
+  ],
 };
