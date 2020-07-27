@@ -38,11 +38,9 @@ class App extends Component {
   }
 
   setUpVotes() {
-    axios
-      .get("/setUpVotes", {
-        upVotes: this.state.upVotes,
-      })
-      .then((res) => {});
+    axios.get("/setUpVotes", {
+      upVotes: this.state.upVotes,
+    });
     localStorage[this.UPVOTES] = JSON.stringify(this.state.upVotes);
   }
 
@@ -95,7 +93,7 @@ class App extends Component {
     );
   }
 
-  handleNativeNavigation(event) {
+  handleNativeNavigation() {
     this.updatePage(this.getCurrentPage(location.pathname), true);
   }
 
@@ -120,9 +118,9 @@ class App extends Component {
   }
 
   updatePage(newPage, isNativeNavigation) {
-    if (STORE[newPage]) {
+    if (window.STORE[newPage]) {
       this.setState({
-        news: STORE[newPage],
+        news: window.STORE[newPage],
         page: newPage,
       });
     } else {
