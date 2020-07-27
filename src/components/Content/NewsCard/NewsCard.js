@@ -3,11 +3,11 @@ import Details from "./Details/Details";
 import Comments from "./Comments/Comments";
 import Upvotes from "./Upvotes/Upvotes";
 
-function NewsCard({ newsItem }) {
+function NewsCard({ newsItem, voteUp, id }) {
   return (
     <div className="newsCard">
       <section className="newsCardMetric">
-        <Upvotes count={newsItem.votes} />
+        <Upvotes count={newsItem.votes} voteUp={voteUp} id={id} />
         <Comments count={newsItem.comments} />
       </section>
       <section className="newsCardDetails">

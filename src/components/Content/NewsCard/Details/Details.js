@@ -32,13 +32,17 @@ function Details({ url, author, timeStamp }) {
     <div className="newsCardMeta">
       {url ? (
         <a className="newsCardLink" href={url} target="_blank">
-          {new URL(url).hostname}
+          ({new URL(url).hostname})
         </a>
       ) : null}
       <div>
-        <span className="newsCardSpecifics">by {author}</span>
+        <span className="newsCardSpecifics">
+          by <b className="newsCardSpecifics--black">{author}</b>
+        </span>
         <span className="newsCardSpecifics">{timeSince(timeStamp * 1000)}</span>
-        <button className="newCardHide">Hide</button>
+        <button className="newCardHide">
+          [<b>Hide</b>]
+        </button>
       </div>
     </div>
   );

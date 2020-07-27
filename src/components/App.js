@@ -10,15 +10,38 @@ class App extends Component {
     super(props);
     this.state = {
       news: this.props.news,
+      upVotes: null,
     };
     this.navigate = this.navigate.bind(this);
     this.handleNativeNavigation = this.handleNativeNavigation.bind(this);
+    this.voteUp = this.voteUp.bind(this);
+    this.UPVOTES = "upVotes";
+  }
+
+  getUpvotes() {
+    try {
+      return JSON.parse(localStorage[this.UPVOTES]);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  setUpVotes() {
+    localStorage[this.UPVOTES] = JSON.stringify(this.state.upVotes);
   }
 
   componentDidMount() {
     const page = this.getCurrentPage(window.location.pathname);
     window.STORE[page] = [...window.SSR_DUMP];
     window.SSR_DUMP = null;
+
+    const upVotes = this.getUpvotes();
+    if (!upVotes) {
+      localStorage[this.UPVOTES] = JSON.stringify(null);
+    }
+    this.setState({
+      upVotes: upVotes ? upVotes : {},
+    });
 
     window.addEventListener("popstate", this.handleNativeNavigation);
   }
@@ -93,11 +116,22 @@ class App extends Component {
     });
   }
 
+  voteUp(id) {
+    let temp = this.state.upVotes;
+    temp[id] = temp[id] ? temp[id] + 1 : 1;
+    this.setState(
+      {
+        upVotes: { ...temp },
+      },
+      this.setUpVotes
+    );
+  }
+
   render() {
     return (
       <>
         <Header />
-        <Content news={this.state.news} />
+        <Content news={this.state.news} voteUp={this.voteUp} />
         <Navigation navigate={this.navigate} />
         <Chart />
       </>

@@ -1,10 +1,10 @@
 import React from "react";
 
-function Upvotes({ count }) {
+function Upvotes({ count, voteUp, id }) {
   return (
     <>
       <div className="newsMetric newsMetric--button newMetrix--votes">
-        <div>&#9650;</div>
+        <div onClick={() => voteUp(id)}>&#9650;</div>
         <div>{count}</div>
       </div>
     </>
