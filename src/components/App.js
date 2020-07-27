@@ -22,14 +22,25 @@ class App extends Component {
   }
 
   getUpvotes() {
-    try {
-      return JSON.parse(localStorage[this.UPVOTES]);
-    } catch (e) {
-      return null;
-    }
+    return axios.get("/getUpVotes").then((res) => {
+      if (res.data.upVotes) {
+        return res.data.upVotes;
+      } else {
+        try {
+          return JSON.parse(localStorage[this.UPVOTES]);
+        } catch (e) {
+          return null;
+        }
+      }
+    });
   }
 
   setUpVotes() {
+    axios
+      .get("/setUpVotes", {
+        upVotes: this.state.upVotes,
+      })
+      .then((res) => {});
     localStorage[this.UPVOTES] = JSON.stringify(this.state.upVotes);
   }
 
@@ -50,12 +61,14 @@ class App extends Component {
     window.STORE[page] = [...window.SSR_DUMP];
     window.SSR_DUMP = null;
 
-    const upVotes = this.getUpvotes();
-    if (!upVotes) {
-      localStorage[this.UPVOTES] = JSON.stringify(null);
-    }
-    this.setState({
-      upVotes: upVotes ? upVotes : {},
+    this.getUpvotes().then((res) => {
+      const upVotes = res;
+      if (!upVotes) {
+        localStorage[this.UPVOTES] = JSON.stringify(null);
+      }
+      this.setState({
+        upVotes: upVotes ? upVotes : {},
+      });
     });
 
     const hiddenNewsItems = this.getHiddenNewsItems();

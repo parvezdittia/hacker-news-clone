@@ -21,6 +21,14 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/getUpVotes", (req, res) => {
+  res.send("Dummy API to get upVotes");
+});
+
+app.get("/setUpVotes", (req, res) => {
+  res.send("Dummy API to get upVotes");
+});
+
 app.get("/page/:page", (req, res) => {
   fetchNews(req.params.page).then((response) => {
     const newsFeed = filter(response.data);
