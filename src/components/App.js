@@ -102,7 +102,7 @@ class App extends Component {
   getCurrentPage(pathname) {
     const page = parseInt(pathname.split("/")[2]);
     if (page) {
-      return Math.abs(page);
+      return Math.abs(page) - 1;
     } else {
       return 0;
     }
@@ -123,7 +123,7 @@ class App extends Component {
     if (STORE[newPage]) {
       this.setState({
         news: STORE[newPage],
-        page: this.getCurrentPage(location.pathname),
+        page: newPage,
       });
     } else {
       this.fetchNews(newPage).then((response) => {
@@ -131,13 +131,13 @@ class App extends Component {
         window.STORE[newPage] = [...news];
         this.setState({
           news: news,
-          page: this.getCurrentPage(location.pathname),
+          page: newPage,
         });
       });
     }
     if (!isNativeNavigation) {
       if (newPage >= 1) {
-        history.pushState(newPage, "", `/page/${newPage}`);
+        history.pushState(newPage, "", `/page/${newPage + 1}`);
       } else {
         history.pushState(newPage, "", "/");
       }
