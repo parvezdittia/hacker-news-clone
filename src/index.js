@@ -7,6 +7,7 @@ import App from "./components/App";
 import axios from "axios";
 
 const app = express();
+//Make async
 let index = fs.readFileSync(__dirname + "/index.html", "utf-8");
 
 app.use("/static", express.static("static"));
@@ -27,6 +28,11 @@ app.get("/getUpVotes", (req, res) => {
 
 app.get("/setUpVotes", (req, res) => {
   res.send("Dummy API to get upVotes");
+});
+
+app.get("/robots.txt", (req, res) => {
+  let robots = fs.readFileSync(__dirname + "/robots.txt", "utf-8");
+  res.send(robots);
 });
 
 app.get("/page/:page", (req, res) => {
