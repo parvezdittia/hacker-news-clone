@@ -10,7 +10,14 @@ const app = express();
 //Make async
 let index = fs.readFileSync(__dirname + "/index.html", "utf-8");
 
-app.use("/static", express.static("static"));
+app.use(
+  "/static",
+  express.static("static", {
+    setHeaders: (res) => {
+      res.set("Cache-Control", "public, max-age=31536000, s-maxage=31536000");
+    },
+  })
+);
 
 app.get("/", (req, res) => {
   fetchNews().then((response) => {
@@ -32,6 +39,7 @@ app.get("/setUpVotes", (req, res) => {
 
 app.get("/robots.txt", (req, res) => {
   let robots = fs.readFileSync(__dirname + "/robots.txt", "utf-8");
+  res.set("Cache-Control", "public, max-age=31536000, s-maxage=31536000");
   res.send(robots);
 });
 
