@@ -24,6 +24,7 @@ The ERN stack: Express, React and NodeJS. The site has been hosted using Firebas
 ## Features
 
 1. Implemented using minimum production dependencies: Only ReactJS used for View generation.
+1. Created from scratch without any scafolding tools like create-react-app.
 1. No React-router for routing between pages as all the pages had the same components. It would make more sense to use the router for large application with a lot of different pages.
 1. No Redux, as on paper it is a fairly simple application, with only one kind of data. Implemented an in memory central store for data of all pages navigated in a session.
 1. Used ReactDom Server for SSR and hydration for CSR.
