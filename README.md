@@ -1,6 +1,6 @@
 # Hacker News Clone
 
-A Hacker News Clone made specifically to get all stories related to HTML, CSS and JS
+A Hacker News Clone made specifically to get all stories related to HTML, CSS and JS. [Check it out](https://hacker-news-clone-92f89.web.app/)
 
 ## Tech Stack
 
